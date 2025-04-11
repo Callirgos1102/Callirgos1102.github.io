@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transforma tu Foto en Arte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .response {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .hero-image {
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Free Bonus Section */
+        .free-styles {
+            background-color: #fff;
+        }
+        
+        .style-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .style-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease; 
+        }
+        
+        .style-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .style-image {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+      image-rendering: auto;
+      display: block;
+            object-fit: cover;
+        }
+        
+        .style-name {
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        
+        /* Catalog Section */
+        .styles-catalog {
+            background-color: #f9f7fe;
+        }
+        
+        .catalog-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        /* Packages Section */
+        .packages {
+            background-color: #fff;
+        }
+        
+        .package-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .package-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .package-header {
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .package-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .package-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .package-body {
+            padding: 30px;
+            background-color: white;
+        }
+        
+        .package-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .package-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .package-features li:before {
+            content: "✓";
+            color: #43cea2;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* Extras Section */
+        .extras {
+            background-color: #f5f9ff;
+        }
+        
+        .extras-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .extra-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .extra-icon {
+            font-size: 2rem;
+            color: #6e8efb;
+        }
+        
+        .extra-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            background-color: #fff;
+        }
+        
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-image {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .before-after {
+            width: 50%;
+            border-radius: 5px;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: white;
+            text-align: center;
+        }
+        
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact h2 {
+            margin-bottom: 20px;
+        }
+        
+        .contact p {
+            margin-bottom: 30px;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Convierte tu foto en una obra animada única.</h1>
+            <p>Transforma tus imágenes favoritas en increíbles obras de arte digital con nuestros más de 100 estilos artísticos.</p>
+            <a href="#free-bonus" class="btn">Obtén tu primer estilo gratis</a>
+        </div>
+    </section>
+
+    <!-- Free Bonus Section -->
+    <section id="free-bonus" class="section free-styles">
+        <div class="container">
+            <div class="section-title">
+                <h2>Bonificación Gratuita</h2>
+                <p>Elige uno de estos estilos gratuitos y recibe tu primera transformación sin costo.</p>
+            </div>
+            <div class="style-gallery">
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Anime%20Clásico*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/AnimeClasico.png" alt="Estilo Anime" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Anime Clásico</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Estudio%20Ghibli*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloGhibli.png" alt="Estilo Chibi" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Estudio Ghibli</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Pixel%20Art*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/PixelArt.png" alt="Estilo Pixelart" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Pixel Art</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Acuarela%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloAcuarela.png" alt="Estilo Acuarela" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Acuarela</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Comic%20Americano*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/ComicAmericano.png" alt="Estilo Comic" class="style-image">
+                </a>
+                    <div class="style-name">Estilo comic Americano</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Baki*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloBaki.png" alt="Estilo Comic" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Baki</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Pintura%a%20Lápiz*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloLapizModerno.png" alt="Estilo Comic" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Pintura a Lápiz</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Retro*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloRetro.png" alt="Estilo Comic" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Retro</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Pop%20Moderno*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloPopModerno.png" alt="Estilo Comic" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Pop Moderno</div>
+                </div>
+                <div class="style-item">
+                    <a href="https://wa.me/51919140027?text=%C2%A1Hola!%20%F0%9F%91%8B%20Quiero%20reclamar%20mi%20estilo%20gratuito%20%F0%9F%8E%81%20y%20me%20gustar%C3%ADa%20transformar%20mi%20foto%20en%20el%20*Estilo%20Pop%20Clásico*%20%F0%9F%8C%B8%E2%9C%A8" target="_blank">
+                    <img src="fotos/EstiloPopClasico.png" alt="Estilo Comic" class="style-image">
+                </a>
+                    <div class="style-name">Estilo Pop Clásico</div>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalog" class="section styles-catalog">
+        <div class="container">
+            <div class="section-title">
+                <h2>Catálogo de Estilos</h2>
+                <p>Explora nuestra colección de más de 100 estilos artísticos organizados por categorías.</p>
+            </div>
+            <div class="catalog-container">
+                <div class="category">
+                    <h3 class="category-title">Anime y Manga</h3>
+                    <div class="style-gallery">
+                        <div class="style-item" , class="responsive" >
+                            <img src="fotopre/Anime-Manga/AnimeShonen.png" alt="Anime Shonen" class="style-image">
+                            <div class="style-name">Anime Shonen</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/Anime-Manga/AnimeShoujo.png" alt="Anime Shoujo" class="style-image">
+                            <div class="style-name">Anime Shoujo</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/Anime-Manga/AnimeGhibli.png" alt="Estilo Ghibli" class="style-image">
+                            <div class="style-name">Estilo Ghibli</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/Anime-Manga/AnimeSeinen.png" alt="Manga Seinen" class="style-image">
+                            <div class="style-name">Manga Seinen</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Pixel Art y Retro</h3>
+                    <div class="style-gallery">
+                        <div class="style-item">
+                            <img src="fotopre/PixelArt y Retro/8 -bitRetro.png" alt="8-bit Retro" class="style-image">
+                            <div class="style-name">8-bit Retro</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/PixelArt y Retro/16-bitSnes.png" alt="16-bit SNES" class="style-image">
+                            <div class="style-name">16-bit SNES</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/PixelArt y Retro/Vaporwave.png" alt="Vaporwave" class="style-image">
+                            <div class="style-name">Vaporwave</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/PixelArt y Retro/Arcade.png" alt="Arcade" class="style-image">
+                            <div class="style-name">Arcade</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3 class="category-title">Realista y Artístico</h3>
+                    <div class="style-gallery">
+                        <div class="style-item">
+                            <img src="fotopre/Realista Artístico/Óleo.png" alt="Óleo" class="style-image">
+                            <div class="style-name">Óleo</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/Realista Artístico/AcuarelaDetallada.png" alt="Acuarela Detallada" class="style-image">
+                            <div class="style-name">Acuarela Detallada</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/Realista Artístico/Carboncillo.png" alt="Carboncillo" class="style-image">
+                            <div class="style-name">Carboncillo</div>
+                        </div>
+                        <div class="style-item">
+                            <img src="fotopre/Realista Artístico/HiperRealista.png" alt="Hiperrealista" class="style-image">
+                            <div class="style-name">Hiperrealista</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://docs.google.com/document/d/1aQekPRZgFJ00NNgbh-1iAQJBda3TDp4R/edit?tab=t.0" target="_blank" class="btn">Ver todos los estilos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="section packages">
+        <div class="container">
+            <div class="section-title">
+                <h2>Paquetes Disponibles</h2>
+                <p>Elige el paquete que mejor se adapte a tus necesidades.</p>
+            </div>
+            <div class="package-cards">
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3>Básico</h3>
+                        <div class="package-price">S/15 ($4 USD)</div>
+                    </div>
+                    <div class="package-body">
+                        <ul class="package-features">
+                            <li>3 fotos personalizadas</li>
+                            <li>3 estilos cada Foto</li>
+                            <li>Formato digital (PNG)</li>
+                            <li>Entrega en 1 a 2 horas</li>
+                        </ul>
+                        <a href="https://api.whatsapp.com/send/?phone=51919140027&text=%C2%A1Hola%21+Quiero+adquirir+el+*Paquete+B%C3%A1sico*+de+fotos+animadas.+1+foto+con+3+estilos+a+elegir." target="_blank" class="btn" style="width: 100%;">Comprar este pack</a>
+                    </div>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-header" style="background: linear-gradient(135deg, #FF8008, #FFC837);">
+                        <h3>Premium</h3>
+                        <div class="package-price">S/25 ($7 USD)</div>
+                    </div>
+                    <div class="package-body">
+                        <ul class="package-features">
+                            <li>6 fotos personalizadas</li>
+                            <li>4 estilos para cada foto</li>
+                            <li>Formato digital (PNG)</li>
+                            <li>Formato digital de alta resolución</li>
+                            <li>Entrega en 15 a 45 minutos</li>
+                        </ul>
+                        <a href="https://api.whatsapp.com/send/?phone=51919140027&text=%C2%A1Hola%21+Quiero+adquirir+el+*Paquete+Premium*+de+fotos+animadas.+3+fotos+con+5+estilos+cada+una+y+alta+resoluci%C3%B3n." target="_blank" class="btn" style="width: 100%;">Comprar este pack</a>
+                    </div>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-header" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);">
+                        <h3>Ultra</h3>
+                        <div class="package-price">S/35  ($9.5 USD)</div>
+                    </div>
+                    <div class="package-body">
+                        <ul class="package-features">
+                            <li>10 fotos personalizadas</li>
+                            <li>5 estilos para cada foto</li>
+                            <li>Formato digital (PNG)</li>
+                            <li>Formato digital de alta resolución</li>
+                            <li>Entrega prioritaria en 5 a 15 minutos</li>
+                        </ul>
+                        <a href="https://api.whatsapp.com/send/?phone=51919140027&text=%C2%A1Hola%21+Quiero+adquirir+el+*Paquete+Ultra*+de+fotos+animadas.+5+fotos%2C+10+estilos+cada+una%2C+con+fondo+personalizado+y+entrega+prioritaria."target="_blank" class="btn" style="width: 100%;">Comprar este pack</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extras Section -->
+    <section id="extras" class="section extras">
+        <div class="container">
+            <div class="section-title">
+                <h2>Personalizables</h2>
+                <p>Mejora tu experiencia con estos complementos adicionales.</p>
+            </div>
+            <div class="extras-list">
+                <div class="extra-item">
+                    <div class="extra-icon">🖼️</div>
+                    <div class="extra-info">
+                        <h4>Fondo Personalizado</h4>
+                        <p>Elige entre diversos escenarios o envía tu propio fondo.</p>
+                    </div>
+                </div>
+                <div class="extra-item">
+                    <div class="extra-icon">✨</div>
+                    <div class="extra-info">
+                        <h4>Animaciones</h4>
+                        <p>Da vida a tu imagen con efectos animados únicos.</p>
+                    </div>
+                </div>
+                <div class="extra-item">
+                    <div class="extra-icon">🔠</div>
+                    <div class="extra-info">
+                        <h4>Frases Personalizadas</h4>
+                        <p>Agrega textos, globos de diálogo o citas.</p>
+                    </div>
+                </div>
+                <div class="extra-item">
+                    <div class="extra-icon">📱</div>
+                    <div class="extra-info">
+                        <h4>Formato para Redes</h4>
+                        <p>Optimiza tu imagen para Instagram, TikTok o Facebook.</p>
+                    </div>
+                </div>
+                <div class="extra-item">
+                    <div class="extra-icon">🎞️</div>
+                    <div class="extra-info">
+                        <h4>Marcos Decorativos</h4>
+                        <p>Embellece tu imagen con marcos temáticos.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testimonios y Ejemplos</h2>
+                <p>Lo que nuestros clientes opinan sobre sus transformaciones.</p>
+            </div>
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <div class="testimonial-image">
+                        <img src="Testimonios/OriginalChibi.png" alt="Foto original" class="before-after">
+                        <img src="Testimonios/Chibi.png" alt="Foto transformada" class="before-after">
+                    </div>
+                    <p class="testimonial-text">¡Me encantó mi versión chibi! Ahora la uso en todas mis redes sociales.</p>
+                    <p class="testimonial-author">- Laura M.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-image">
+                        <img src="Testimonios/OriginalFamilia.png" alt="Foto original" class="before-after">
+                        <img src="Testimonios/Familia.png" alt="Foto transformada" class="before-after">
+                    </div>
+                    <p class="testimonial-text">Pedí un retrato familiar en estilo anime y quedó increíble. Ahora lo tenemos enmarcado en casa.</p>
+                    <p class="testimonial-author">- Carlos P.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-image">
+                        <img src="Testimonios/OriginalMascota.png" alt="Foto original" class="before-after">
+                        <img src="Testimonios/Mascota.png" alt="Foto transformada" class="before-after">
+                    </div>
+                    <p class="testimonial-text">La transformación en estilo pixel art de mi mascota superó mis expectativas. ¡Servicio recomendado!</p>
+                    <p class="testimonial-author">- Andrea S.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="contact-content">
+                <h2>¿Listo para transformar tu foto?</h2>
+                <p>Respondo rápidamente a todas las consultas. ¡Contáctame y comencemos a crear tu obra de arte personalizada!</p>
+                <a href="https://api.whatsapp.com/send/?phone=51919140027&text=%C2%A1Listo+para+transformar+mi+foto%21+Vi+tu+cat%C3%A1logo+y+me+gustar%C3%ADa+saber+m%C3%A1s+detalles+para+crear+mi+obra+de+arte+personalizada.
+                " class="btn whatsapp-btn">Contáctame por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Transformación Artística. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
